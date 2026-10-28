@@ -1,5 +1,5 @@
-dataset/*.pkl
-dataset/*.npz
-__pycache__/
-.ipynb_checkpoints/
 .venv/
+__pycache__/
+dataset/RML2016.10a_dict.pkl
+dataset/features.npz
+saved_models/knn.joblib
