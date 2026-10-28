@@ -20,10 +20,7 @@ Course project, 23AID205 Introduction to AI & ML, Group A-8, Amrita Vishwa Vidya
 
 RadioML 2016.10a (DeepSig): 220,000 I/Q signals of shape 2 × 128, 11 classes, SNR from −20 to +18 dB.
 
-The file is too large for the repository (641 MB), so it is attached to this repository's **Releases** page:
-
-1. Download `RML2016.10a_dict.pkl` from the latest release.
-2. Put it in the `dataset/` folder.
+The dataset is included in the `dataset/` folder. GitHub does not allow files over 100 MB, so the 641 MB file is stored as 3 compressed parts (`RML2016.10a_dict.pkl.gz.part0` to `part2`). The notebook joins and unzips them automatically on the first run, creating `dataset/RML2016.10a_dict.pkl` (MD5 `61bf35ac7f0b7d8843613453447ea290`).
 
 Original source: [deepsig.ai/datasets](https://www.deepsig.ai/datasets) (O'Shea & West, GNU Radio Conference 2016). The dataset is licensed under CC BY-NC-SA 4.0.
 

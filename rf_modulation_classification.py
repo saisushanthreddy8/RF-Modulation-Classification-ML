@@ -3,17 +3,33 @@
 #
 # Steps: load dataset → extract 176 features → 80/20 split → train and test 4 models → print metrics → compare.
 #
-# **How to run:** put `RML2016.10a_dict.pkl` in the `dataset/` folder (download link in the README), select a Python kernel and click **Run All**. All results (metrics, tables and plots) appear directly below the cells.
+# **How to run:** select a Python kernel and click **Run All**. The dataset is included in the `dataset/` folder (in 3 compressed parts) and is rebuilt automatically on the first run. All results (metrics, tables and plots) appear directly below the cells.
 
 
 # ## 0. Dataset
-# The notebook looks for `dataset/RML2016.10a_dict.pkl`. If the file is not found there, you are asked to type its path.
+# On the first run, the 3 parts in `dataset/` are joined and unzipped into `RML2016.10a_dict.pkl` (about 30 seconds). If the file cannot be found, you are asked to type its path.
 
 
 import os
+import glob
+import gzip
+import shutil
 
 DATASET_FILE = os.path.join("dataset", "RML2016.10a_dict.pkl")
 RUN_SVM = True     # SVM takes about 1 hour to train - set to False to skip it
+
+# rebuild the dataset from its 3 compressed parts (first run only)
+parts = sorted(glob.glob(os.path.join("dataset", "RML2016.10a_dict.pkl.gz.part*")))
+if not os.path.exists(DATASET_FILE) and len(parts) > 0:
+    print("Rebuilding dataset from", len(parts), "parts...")
+    gz_file = DATASET_FILE + ".gz"
+    with open(gz_file, "wb") as out:
+        for part in parts:
+            with open(part, "rb") as f:
+                shutil.copyfileobj(f, out)
+    with gzip.open(gz_file, "rb") as f_in, open(DATASET_FILE, "wb") as f_out:
+        shutil.copyfileobj(f_in, f_out)
+    os.remove(gz_file)
 
 while not os.path.exists(DATASET_FILE):
     print("Dataset not found:", DATASET_FILE)
